@@ -54,7 +54,7 @@ public class BTree {
 		n1.keys = new ArrayList<>();
 		int median = (
 				keysToDistribute.size() % 2 == 0 ? keysToDistribute.get(keysToDistribute.size() / 2):
-				keysToDistribute.get(((int) (keysToDistribute.size() / 2) - 1)) + 1
+				keysToDistribute.get((int) (keysToDistribute.size() / 2))
 		);
 		for (int i = 0; i < keysToDistribute.size(); i++) {
 			if (i < keysToDistribute.indexOf(median))n1.insertKey(keysToDistribute.get(i));
@@ -70,6 +70,7 @@ public class BTree {
 		if (n1 == root) {
 			n1.setParent(new Node(false));
 			root = n1.parent;
+			height ++;
 		}
 		n1.parent.insertChild(n2);
 		n2.setParent(n1.parent);
