@@ -40,9 +40,10 @@ public class BTree {
 	 * (Reminder: a node is full when it has order - 1 elements)
 	 * 
 	 *	It will be split into two nodes, with the first half of the keys
-	 *	that remain in the old node Q1, the second half of the keys that go into a new adjacent
+	 *	that remain in the old node n1, the second half of the keys that go into a new adjacent
 	 *	node n2, and the median key, together with the pointer to n2, that is inserted into
 	 *	the father node n of n1 
+	 *	If n1 is the root and therefore has no parent, it creates it and tree heigh increases
 	 * @param node
 	 * @param key
 	 */
@@ -119,30 +120,6 @@ public class BTree {
 		public int min() {
 			return keys.get(0);
 		}
-		
-		
-		/**
-		 * Add the given key to the current node that is supposed to be full.
-		 * 
-		 * Then splits this node in a node n2 that have all element on the right of 
-		 * the median key of this one
-		 * 
-		 * Finally, delete the median key and all key of n2 in the current.
-		 * 
-		 * @param key
-		 * @return
-		 * @throws NodeException 
-		 */
-//		public Node splitNode(int key) throws NodeException {
-//			if (!this.isFull()) throw new NodeException("Node must be full to call this method");
-//			
-//			Node splittedNode = new Node(this.isLeaf);
-//			this.keys.add(key);
-//			keys.sort(Comparator.naturalOrder());
-//			return (
-//					keys.size() % 2 == 0 ? keys.get((keys.size() - 1) / 2):
-//					keys.get(((int) (keys.size() - 1) / 2)) + 1);
-//		}
 		
 		private void setParent(Node parent) {
 			this.parent = parent;
