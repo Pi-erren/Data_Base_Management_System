@@ -8,7 +8,7 @@ import replacement_algorithms.ClockBuffer;
 import replacement_algorithms.FifoBuffer;
 import replacement_algorithms.LruBuffer;
 
-public class Main {
+public class AlgorithmsMain {
 	
 	public static void main(String[] args) {
 		int frames = 4;
