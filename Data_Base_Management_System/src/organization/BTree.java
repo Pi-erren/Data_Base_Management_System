@@ -32,9 +32,8 @@ public class BTree {
 		}
 		else {
 			if (node.isLeaf) return null;
-			else search(findNextNode(node, key), key);
+			else return search(findNextNode(node, key), key);
 		}
-		return null;
 	}
 	
 	public void insert(int key) throws NodeException {
