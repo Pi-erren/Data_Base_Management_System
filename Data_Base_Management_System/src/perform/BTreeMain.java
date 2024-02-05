@@ -18,6 +18,9 @@ public class BTreeMain {
 		for (int key: keys) {
 			btree.insert(key);
 		}
+		
+		System.out.println(btree.search(95)); // is in the btree, should return the node containing it
+		System.out.println(btree.search(121)); // is not in the btree, should return null;
 		int x = 0;
 	} 
 }

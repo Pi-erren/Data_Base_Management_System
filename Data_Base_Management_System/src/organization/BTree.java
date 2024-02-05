@@ -16,8 +16,25 @@ public class BTree {
 		this.order = order;
 	}
 
-	public boolean search(int key) {
-		return false;
+	/**
+	 * Search a key in the B-Tree,
+	 * 
+	 * @param key
+	 * @return the node where the key is located, null if not found
+	 */
+	public Node search(int key) {
+		return this.search(root, key);
+	}
+	
+	public Node search(Node node, int key) {
+		if (node.keys.contains(key)) {
+			return node;
+		}
+		else {
+			if (node.isLeaf) return null;
+			else search(findNextNode(node, key), key);
+		}
+		return null;
 	}
 	
 	public void insert(int key) throws NodeException {
