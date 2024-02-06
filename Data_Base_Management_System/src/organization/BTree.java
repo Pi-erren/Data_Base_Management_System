@@ -265,11 +265,6 @@ public class BTree {
 		}
 	}
 
-	private void updateParentKey(Node node) {
-		int index = node.getParentChildIndex();
-		node.parent.keys.set(index - 1, node.keys.get(0));
-	}
-
 	private void mergeWithParent(Node parent) {
 		int index = parent.getParentChildIndex();
 		Node leftSibling = parent.children.get(index - 1);
