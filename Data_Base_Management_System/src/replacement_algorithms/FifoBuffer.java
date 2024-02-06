@@ -5,18 +5,16 @@ import java.util.List;
 import java.util.Queue;
 
 public class FifoBuffer<E> implements BufferManager<E>{
-	
-	private Queue<E> elements;
-	
-	private int frames;
+	private final Queue<E> elements;
+	private final int frames;
 	
 	public FifoBuffer(int frames) {
-		if (frames < 1) throw new IllegalArgumentException("Number of frame of the buffer muste be >= 1");
+		if (frames < 1)
+			throw new IllegalArgumentException("Number of frame of the buffer muste be >= 1");
 		this.frames = frames;
 		this.elements = new LinkedList<E>();
-		for (int i = 0; i < frames; i++) {
+		for (int i = 0; i < frames; i++)
 			elements.add(null);
-		}
 	}
 	
 	@Override
@@ -42,6 +40,7 @@ public class FifoBuffer<E> implements BufferManager<E>{
 	@Override
 	public void insert(E element) {
 		elements.offer(element);
-		if (elements.size() >= frames) elements.poll();
+		if (elements.size() >= frames)
+			elements.poll();
 	}
 }

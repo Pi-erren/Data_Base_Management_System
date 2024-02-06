@@ -4,17 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClockBuffer<E> implements BufferManager<E>{
-		
-	private List<E> elements;
-	
-	private List<Integer> indicators;
-	
+	private final List<E> elements;
+	private final List<Integer> indicators;
 	private int pointer;
-	
-	private int frames;
+	private final int frames;
 	
 	public ClockBuffer(int frames) throws IllegalArgumentException{
-		if (frames < 1) throw new IllegalArgumentException("Number of frame of the buffer muste be >= 1");
+		if (frames < 1)
+			throw new IllegalArgumentException("Number of frame of the buffer muste be >= 1");
 		this.frames = frames;
 		this.elements = new ArrayList<E>();
 		this.indicators = new ArrayList<Integer>();
@@ -49,13 +46,9 @@ public class ClockBuffer<E> implements BufferManager<E>{
 				return 0;
 			case -1:
 				// If there is a free frame in the buffer
-				if (this.add(element)) { 
-					return 1;
-				}
-				else {
+				if (!this.add(element))
 					this.insert(element);
-					return 1;
-				}
+				return 1;
 		}	
 		return 0;
 	}
@@ -73,7 +66,7 @@ public class ClockBuffer<E> implements BufferManager<E>{
 	/**
 	 * Add the given element in the first free frame
 	 * 
-	 * @param element
+	 * @param element the element to add
 	 * @return true / false if we succeeded to add the element or not
 	 */
 	public boolean add(E element) {
@@ -91,8 +84,10 @@ public class ClockBuffer<E> implements BufferManager<E>{
 	 * Move the pointer of the clock algorithm
 	 */
 	public void movePointer() {
-		if (pointer < frames - 1) pointer ++;
-		else pointer = 0;
+		if (pointer < frames - 1)
+			pointer ++;
+		else
+			pointer = 0;
 	}
 		
 	/**
@@ -109,7 +104,7 @@ public class ClockBuffer<E> implements BufferManager<E>{
 	/**
 	 * Set the "second chance" indicator for a given element
 	 * 
-	 * @param element
+	 * @param element the element on which to set the "second chance" indicator
 	 */
 	public void setIndicator(E element, int indicator) {
 		indicators.set(elements.indexOf(element), indicator);
@@ -118,13 +113,12 @@ public class ClockBuffer<E> implements BufferManager<E>{
 	/**
 	 * Check if the element is in the buffer and return its indicator (0 or 1 wether it has a second chance or not)
 	 * 
-	 * @param element
+	 * @param element the element to check
 	 * @return the indicator of the element if it was found, -1 if not
 	 */
 	public int check(E element) {
-		for (int i = 0; i < frames; i++) {
+		for (int i = 0; i < frames; i++)
 			if (elements.get(i) == element) return indicators.get(i);
-		}
 		return -1;
 	}
 	
@@ -135,7 +129,10 @@ public class ClockBuffer<E> implements BufferManager<E>{
 	 * @return the index of the first free frame found
 	 */
 	public int checkForPlace() {
-		for (E element: elements) if (element == null) return elements.indexOf(element);
+		for (E element : elements) {
+			if (element == null)
+				return elements.indexOf(element);
+		}
 		return -1;
 	}
 }

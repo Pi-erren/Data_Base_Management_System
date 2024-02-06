@@ -11,8 +11,7 @@ public interface BufferManager<E> {
 	 * @return the number of missing pages
 	 */
 	int processQuery(List<E> sequence);
-	
-	
+
 	/**
 	 * Process the query for one element
 	 * 

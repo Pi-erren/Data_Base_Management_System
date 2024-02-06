@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LruBuffer<E> implements BufferManager<E> {
-
-	private List<E> elements;
-	
-	private int frames;
+	private final List<E> elements;
+	private final int frames;
 
 	public LruBuffer(int frames) {
 		this.frames = frames;
@@ -27,14 +25,21 @@ public class LruBuffer<E> implements BufferManager<E> {
 
 	@Override
 	public int processQuery(E element) {
-		if (!elements.contains(element)) { this.insert(element); return 1;}
-		else{this.insert(element);return 0;}
+		if (!elements.contains(element)) {
+			this.insert(element);
+			return 1;
+		}
+		else {
+			this.insert(element);
+			return 0;
+		}
 	}
 
 	@Override
 	public void insert(E element) {
 		elements.remove(element);
 		elements.add(0, element);
-		if (elements.size() > frames) elements.remove(elements.size() - 1);
+		if (elements.size() > frames)
+			elements.remove(elements.size() - 1);
 	}
 }

@@ -1,7 +1,5 @@
 package perform;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import replacement_algorithms.ClockBuffer;
