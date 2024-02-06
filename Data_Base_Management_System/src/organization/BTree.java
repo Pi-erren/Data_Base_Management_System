@@ -121,6 +121,19 @@ public class BTree {
 			return;
 		}
 
+		if (!node.keys.contains(key)) {
+			Node nextNode = findNextNode(node, key);
+			if (nextNode == null)
+				return;
+			delete(nextNode, key);
+
+			if (nextNode.keys.isEmpty() && !nextNode.isRoot()) {
+				borrowOrMerge(nextNode);
+			}
+
+			return;
+		}
+
 		if (node.isLeaf) {
 			node.keys.remove(Integer.valueOf(key));
 			if (node == root && node.keys.isEmpty()) {
@@ -131,12 +144,25 @@ public class BTree {
 				// Borrow or merge from siblings
 				borrowOrMerge(node);
 			}
+		} else if (node.keys.size() > order / 2 || !node.isRoot()){
+			int index = node.keys.indexOf(key);
+			int keyToTakeFromChild = node.children.get(index).keys.remove(node.children.get(index).keys.size() - 1);
+
+			node.keys.remove(Integer.valueOf(key));
+			node.keys.add(keyToTakeFromChild);
 		} else {
-			Node nextNode = findNextNode(node, key);
-			delete(nextNode, key);
-			if (nextNode.keys.isEmpty() && !nextNode.isRoot()) {
+			Node lastNode = node.children.get(0);
+			while (!lastNode.isLeaf)
+				lastNode = lastNode.children.get(lastNode.children.size()-1);
+
+			int keyToMove = lastNode.keys.remove(lastNode.keys.size()-1);
+
+			node.keys.add(keyToMove);
+			node.keys.remove(Integer.valueOf(key));
+
+			if (!lastNode.isRoot() && lastNode.keys.size() < order / 2) {
 				// Borrow or merge from siblings
-				borrowOrMerge(nextNode);
+				borrowOrMerge(lastNode);
 			}
 		}
 	}
@@ -211,8 +237,6 @@ public class BTree {
 			} else {
 				mergeWithParent(node.parent);
 			}
-		} else {
-			updateParentKey(node);
 		}
 	}
 
