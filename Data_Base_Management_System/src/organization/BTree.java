@@ -160,10 +160,12 @@ public class BTree {
 			node.keys.add(keyToMove);
 			node.keys.remove(Integer.valueOf(key));
 
-			if (!lastNode.isRoot() && lastNode.keys.size() < order / 2) {
-				// Borrow or merge from siblings
-				borrowOrMerge(lastNode);
-			}
+			Node nodeToTest = lastNode;
+			while (!nodeToTest.isRoot())
+				if (nodeToTest.keys.size() < order / 2) {
+					borrowOrMerge(nodeToTest);
+					nodeToTest = nodeToTest.parent;
+				}
 		}
 	}
 
