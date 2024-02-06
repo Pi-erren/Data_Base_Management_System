@@ -262,8 +262,6 @@ public class BTree {
 			} else {
 				mergeWithParent(node.parent);
 			}
-		} else {
-			updateParentKey(node);
 		}
 	}
 
@@ -295,8 +293,6 @@ public class BTree {
 			} else {
 				mergeWithParent(parent);
 			}
-		} else {
-			updateParentKey(leftSibling);
 		}
 	}
 	
