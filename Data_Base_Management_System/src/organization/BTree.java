@@ -112,10 +112,22 @@ public class BTree {
 		return null;
 	}
 
+	/**
+	 * Root method for deletion
+	 * @param key
+	 */
 	public void delete(int key) {
 		delete(root, key);
 	}
 
+	/**
+	 * Recursive method to delete an element
+	 * If the concerned node does not respect the b-tree constraints anymore after the deletion,
+	 * then its methode call borrow or merge methods according to the case
+	 * 
+	 * @param node
+	 * @param key
+	 */
 	private void delete(Node node, int key) {
 		if (node == null) {
 			return;
@@ -169,6 +181,18 @@ public class BTree {
 		}
 	}
 
+	/**
+	 * Let m be the size of a node
+	 * Each node must have at least m/2 elements
+	 * 
+	 * If the node of the deleted elements now has less than m/2 elements,
+	 * we must borrow an element from a sibling
+	 * Therefore, the sibling must have at least m/2 + 1 elements
+	 * If none of the sibling satisfies this condition
+	 * Then we merge the current node with one of the siblings
+	 * 
+	 * @param node
+	 */
 	private void borrowOrMerge(Node node) {
 		int index = node.getParentChildIndex();
 
@@ -187,6 +211,10 @@ public class BTree {
 		}
 	}
 
+	/**
+	 * @param node
+	 * @param index
+	 */
 	private void borrowFromLeftSibling(Node node, int index) {
 		Node leftSibling = node.parent.children.get(index - 1);
 		int borrowedKey = leftSibling.keys.remove(leftSibling.keys.size() - 1);
@@ -267,6 +295,13 @@ public class BTree {
 		}
 	}
 
+	/**
+	 * This method manages the case when the parent node does not satisfies the
+	 * B-Tree conditions anymore.
+	 * It is recursive: stops when the next parent satisfies conditions
+	 * 
+	 * @param parent
+	 */
 	private void mergeWithParent(Node parent) {
 		int index = parent.getParentChildIndex();
 		Node leftSibling = parent.children.get(index - 1);
