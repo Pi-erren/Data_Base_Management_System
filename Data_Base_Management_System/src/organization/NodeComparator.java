@@ -4,6 +4,11 @@ import java.util.Comparator;
 
 import organization.BTree.Node;
 
+/**
+ * Compare two B-Tree nodes by comparing their min and max elements
+ * [1,4,6,9] is inferior to [12, 14]
+ * [4, 8, 10] is superior to [1, 3]
+ */
 public class NodeComparator implements Comparator<Node>{
 
 	@Override

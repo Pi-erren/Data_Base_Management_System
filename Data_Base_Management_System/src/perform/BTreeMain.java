@@ -3,11 +3,10 @@ package perform;
 import java.util.List;
 
 import organization.BTree;
-import organization.NodeException;
 
 public class BTreeMain {
 
-	public static void main(String[] args) throws NodeException {
+	public static void main(String[] args)  {
 		BTree btree = new BTree(5);
 
 		List<Integer> keys=List.of(10,15,30,27,35,40,45,37,20,50,55,46,71,66,74,85,90,79,78,95,25,81,68,60,65);
