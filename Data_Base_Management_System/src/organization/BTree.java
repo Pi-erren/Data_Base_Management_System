@@ -328,6 +328,35 @@ public class BTree {
 		}
 	}
 	
+	/**
+	 * This method iterate through each node and check if it satisfies the B-Tree
+	 * conditions.
+	 * 
+	 * @return the first wrong node if one is found, null otherwise.
+	 */
+	public boolean checkValidity() {
+		return checkValidity(root);
+	}
+	
+	
+	/**
+	 * Uses recursion to go through the Btree and check each node validity
+	 * 
+	 * @param node
+	 * @return a not valid node if one if found, null otherwise
+	 */
+	private boolean checkValidity(Node node) {
+		if (node.isLeaf) return node.isValid();
+		
+		for (Node child: node.children) {
+			if (child != root) {
+				if (child.isValid()) return checkValidity(child);
+				else return false;
+			}
+		}
+		return true;
+	}
+	
 	class Node {
 		private Node parent;
 		private List<Integer> keys; 
@@ -380,6 +409,24 @@ public class BTree {
 				throw new IllegalStateException("Node has no parent.");
 			}
 			return parent.children.indexOf(this);
+		}
+		
+		/**
+		 * Check the validity of the node
+		 * If the number of elements is strictly inferior to m/2
+		 * If the number of children node is equal to the number of keys + 1
+		 * 
+		 * @return
+		 */
+		public boolean isValid() {
+			if (keys.size() < (int) order/2) return false;
+			if (isLeaf) {
+				if (children.size() > 0) return false;
+			}
+			else {
+				if (children.size() != keys.size() + 1) return false;
+			}
+			return true;
 		}
 		
 		@Override
